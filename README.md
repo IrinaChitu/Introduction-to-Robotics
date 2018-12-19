@@ -17,7 +17,8 @@
   - Ananas
   - Pară
   - Avocado
-  - 1, 2, 3 și 4
+  - 1
+  - 2
   
 → LCD Display
 
@@ -29,8 +30,6 @@ Un jucător începe punând o "carte" deasupra "pachetului" din centrul jucător
 Cărțile care ilustrează numerele 1, 2, 3, 4 se numesc puncte. Când un jucător pune un punct jos îl provoaca la "duel" pe următorul, care are un număr de șanse egal numarului indicat de "carte" pentru a pune un alt punct. Dacă nu pune punct în acel număr de șanse, jucătorul care a pus ultimul punct revendica toate "cărțile de jos". Cu alte cuvinte, dacă un jucător pune:
 1. următorul este obligat să pună punct din prima pentru a câștiga. Altfel le ia cel care a pus 1
 2. următorul are două șanse să pună punct. Dacă nu reușește din prima, mai are una, dar dacă nu pune nici dintr-a doua, le ia cel care a pus 2-ul.
-3. următorul are trei șanse să pună punct. Pune o dată, dacă nu e punct, continuă, la fel a doua oară, iar dacă nici a treia oară nu pune punct, le ia cel care a pus 3-ul.
-4. următorul are patru șanse să pună punct. Pune o dată, dacă nu e punct, continuă, la fel a doua și a treia oară, iar dacă nici a patra oară nu pune punct, le ia cel care a pus 4-ul.
 Până aici jocul a fost doar de noroc. Dar acum vine partea amuzantă care necesită refelexe foarte bune.
 
 **Regula Dublei:** Dacă două fructe la fel apar consecutiv, primul jucător care apasă butonul, ia toate cărțile de jos, adică va strânge un număr de puncte egal cu numărul de cărți decartate de la ultima revendicare corectă. Apăsarea butonului imită "bătaia" din jocul original de cărți.
