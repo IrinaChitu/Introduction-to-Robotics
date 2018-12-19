@@ -10,13 +10,12 @@
 #define JOY3_BUTTON A3
 #define V0_PIN 9
 #define REPLAY_BUTTON A4
+#define DIN_PIN 12 //data in
+#define CLK_PIN 11 //clock
+#define CS_PIN 10 //load/cs
 
-const int DIN_PIN = 12; //data in
-const int CLK_PIN = 11; //clock
-const int CS_PIN = 10; //load/cs
-
-LedControl display = LedControl(DIN_PIN, CLK_PIN, CS_PIN);
-LiquidCrystal lcd(3, 4, 5, 6, 7, 2);
+LedControl display = LedControl(DIN_PIN, CLK_PIN, CS_PIN);    //Matrix 1088AS
+LiquidCrystal lcd(3, 4, 5, 6, 7, 2);    //LCD
 
 const uint64_t cards[] = {
   0x06083c4242423c00, //APPLE
@@ -49,14 +48,14 @@ int currentPlayer;
 int nrPlayers = 1;
 int activePlayers;
 int scorePlayers[3];
-int count;    //the number of discarded cards on the board
 bool introduction = false;    //false -> still in intro | true -> done with intro 
+int count;    //the number of discarded cards on the board
 int show;
-bool duelActive = false;
-int duelRounds;
 bool joyMoved = false;
 int prev = -1;    //checking for double
 int pprev = -1;    //checking for sandwich
+bool duelActive = false;
+int duelRounds;
 bool empty = true;    //if there is any card on the board
 bool delayRunning = false;
 unsigned long delayStartTime = 0;
@@ -82,6 +81,47 @@ void gameIntroduction() {
   lcd.print(nrPlayers);
 }
 
+void nrOfPlayersSelector() {
+  if (delayRunning == false) {
+    if (dataX[0] < 100 && joyMoved == false) {
+      nrPlayers++;
+      if (nrPlayers > 3) {
+        nrPlayers = 3;
+      }
+      lcd.setCursor(7, 1);
+      lcd.print(nrPlayers);
+      joyMoved = true;
+    }
+    if (dataX[0] > 600 && joyMoved == false){
+      nrPlayers--;
+      if (nrPlayers < 1) {
+        nrPlayers = 1;
+      }
+      lcd.setCursor(7, 1);
+      lcd.print(nrPlayers);
+      joyMoved = true;
+    }
+    if (dataX[0] < 600 && dataX[0] > 400){
+      joyMoved = false;
+    }
+  }
+  if (dataButton[0] == 0) {
+    lcd.clear();
+    lcd.setCursor(2, 0);
+    lcd.print("Let's play!!");
+    if (delayRunning == false) {
+      delayRunning = true;
+      delayStartTime = millis();
+   }
+  }
+  if ((delayRunning == true) && (millis() - delayStartTime >= 1000)) {    //1000 = delayTime
+    delayRunning = false;
+    introduction = true;
+    lcd.clear();
+    createPlayers();
+   }
+}
+
 void displayImage(uint64_t image) {
   for (int i = 0; i < 8; i++) {
     byte row = (image >> i * 8) & 0xFF;
@@ -92,7 +132,9 @@ void displayImage(uint64_t image) {
 }
 
 void wrong(int index, int nr) {
-  currentPlayer = (index + 1) % nrPlayers;
+  if (duelActive == false) {
+    currentPlayer = (index + 1) % nrPlayers;
+  }
   displayImage(fail);
   lcd.clear();
   lcd.setCursor(4, 0);
@@ -125,7 +167,12 @@ void wrong(int index, int nr) {
   lcd.print(printline);
   delay(1500);    ////wait for the message to appear long enough on the screen. therefore you do not play while waiting
   lcd.clear();
-  displayImage(cards[nr]);    //to make sure the X disappears
+  if (empty == false) {
+    displayImage(cards[nr]);    //to make sure the X disappears
+  }
+  else {
+    display.clearDisplay(0);
+  }
 }
 
 void correct(int index) { 
@@ -135,7 +182,7 @@ void correct(int index) {
   if (duelActive == false) {
     lcd.setCursor(4, 0);
     lcd.print("CORRECT!");
-    delay(2400);    ////wait for the message to appear long enough on the screen. therefore you do not play while waiting
+    delay(400);    ////wait for the message to appear long enough on the screen. therefore you do not play while waiting
     lcd.clear();
   }
   scorePlayers[index] += count;
@@ -183,12 +230,12 @@ void playersTurn() {
   //only Ox | RANDOM-ish order
   if ((dataX[currentPlayer] > 1000 || dataX[currentPlayer] < 100) && joyMoved == false) {
     display.clearDisplay(0);
-    delay(100);    //make the image blink  //=> this must disappear
+    delay(100);    //make the image blink
     scorePlayers[currentPlayer]--;    //discards one card
     if (nrPlayers != 1) {
       if (finished == false) {
         displayScore();
-        verify();    //check for winner
+        verify();    //check for the winner
       }
     }
     else {
@@ -228,6 +275,9 @@ void playersTurn() {
 }
 
 void buttonPressed() {
+  if (empty == true) {
+    return;
+  }
   for (int i = 0; i < nrPlayers; i++) {
     if (dataButton[i] == 0) {
       if (delayRunning == false) {
@@ -246,7 +296,7 @@ void buttonPressed() {
           prev = pprev = -1;
         }
       }
-      //prevent the player who pressed immediately after the "winner" from losing points
+      //prevent the player who pressed immediately after the "winner" from losing additional points
       if (delayRunning == false) {
         delayRunning = true;
         delayStartTime = millis();
@@ -375,53 +425,18 @@ void setup() {
 
 void loop() {
   readData();    //read: joyX + buttonState + millis
-  if (analogRead(REPLAY_BUTTON) > 1018) {    //if we digitalRead, the button is too sensitive |lack of analog pins
+  if (analogRead(REPLAY_BUTTON) > 1018) {    //if we digitalRead, the button is too sensitive | lack of analog pins
       lcd.clear();
       replay();
   }
-  if (introduction == false) {    //introduction mode: first joystick has control over the number of players
-    if (delayRunning == false) {
-      if (dataX[0] < 100 && joyMoved == false) {
-        nrPlayers++;
-        if (nrPlayers > 3) {
-          nrPlayers = 3;
-        }
-        lcd.setCursor(7, 1);
-        lcd.print(nrPlayers);
-        joyMoved = true;
-      }
-      if (dataX[0] > 600 && joyMoved == false){
-        nrPlayers--;
-        if (nrPlayers < 1) {
-          nrPlayers = 1;
-        }
-        lcd.setCursor(7, 1);
-        lcd.print(nrPlayers);
-        joyMoved = true;
-      }
-      if (dataX[0] < 600 && dataX[0] > 400){
-        joyMoved = false;
-      }
-    }
-    if (dataButton[0] == 0) {
-      lcd.clear();
-      lcd.setCursor(2, 0);
-      lcd.print("Let's play!!");
-      if (delayRunning == false) {
-        delayRunning = true;
-        delayStartTime = millis();
-     }
-    }
-    if ((delayRunning == true) && (millis() - delayStartTime >= 1000)) {    //1000 = delayTime
-      delayRunning = false;
-      introduction = true;
-      lcd.clear();
-      createPlayers();
-     }
+  if (introduction == false) {    //introduction mode: only the first joystick has control over the number of players
+    nrOfPlayersSelector();
   }
   else {    //game mode:
-    playersTurn();
-    buttonPressed();    //check whether or not a button was pressed
+    if (duelActive == false) {
+      playersTurn();  
+    }
+    buttonPressed();    //check whether or not a button was pressed (correctly or not)
   
     if (empty == false) {    //if the stack is empty wait for a player to move the joystick, else keep showing the current card
       displayImage(cards[show]);
