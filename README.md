@@ -42,5 +42,6 @@ Până aici jocul a fost doar de noroc. Dar acum vine partea amuzantă care nece
 Ultimul jucător care rămâne cu un punctaj nenul câștigă.
 
                                                        ◄♠♣♦♥DEMO♥♦♣♠►
-Mai jos veți găsi două filmulețe scurte ale unei variante mai vechi a jocului. Între timp, mesajele au fost modificate și au fost adăugați playeri noi.
-https://drive.google.com/drive/folders/13PsR9wBEoKmsXPBNfd40a_022aPInmm6?usp=sharing
+Mai jos veți găsi două filmulețe scurte care ilustrează dinamica jocului.
+**Drive:** https://drive.google.com/drive/folders/13PsR9wBEoKmsXPBNfd40a_022aPInmm6?usp=sharing
+**YouTube:** https://www.youtube.com/channel/UC0CxP3J1w-09VYszRM-3TJw/videos
