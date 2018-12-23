@@ -43,5 +43,7 @@ Ultimul jucător care rămâne cu un punctaj nenul câștigă.
 
                                                        ◄♠♣♦♥DEMO♥♦♣♠►
 Mai jos veți găsi două filmulețe scurte care ilustrează dinamica jocului.
+
 **Drive:** https://drive.google.com/drive/folders/13PsR9wBEoKmsXPBNfd40a_022aPInmm6?usp=sharing
+
 **YouTube:** https://www.youtube.com/channel/UC0CxP3J1w-09VYszRM-3TJw/videos
