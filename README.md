@@ -5,9 +5,11 @@
 
                                                     ◄♠♣♦♥COMPONENTE♥♦♣♠►
                                       *cu care jucătorii interacționează în mod direct*
+→ Plăcuță Arduino Uno
+
 → 3+ Joystick-uri
 
-→ Matrice 8x8, pe care se afișează următoarele "cărți":
+→ Matrice 8x8 1088AS, pe care se afișează următoarele "cărți":
   - Măr
   - Căpșună
   - Cireșe
@@ -20,7 +22,17 @@
   - 1
   - 2
   
+→ DRIVER MAX 7219
+
 → LCD Display
+
+→ Buton
+
+→ Breadboards
+
+→ Rezistențe
+
+→ Fire
 
                                                       ◄♠♣♦♥REGULI♥♦♣♠►
 Se joacă în cel puțin 2 persoane și nu are o limită superioară de jucători.
