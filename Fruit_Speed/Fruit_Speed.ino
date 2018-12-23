@@ -40,6 +40,8 @@ const uint64_t success = {
   0x0000240081423c00 //:)
 };
 
+const int nrMaxPlayers = 3;
+const int analogValue = 1010;
 int joyX[3] = {JOY1_X, JOY2_X, JOY3_X};
 int dataX[3];    //xValue, firstJoy
 int joyButton[3] = {JOY1_BUTTON, JOY2_BUTTON, JOY3_BUTTON};
@@ -85,7 +87,7 @@ void nrOfPlayersSelector() {
   if (delayRunning == false) {
     if (dataX[0] < 100 && joyMoved == false) {
       nrPlayers++;
-      if (nrPlayers > 3) {
+      if (nrPlayers > nrMaxPlayers) {
         nrPlayers = 3;
       }
       lcd.setCursor(7, 1);
@@ -402,10 +404,10 @@ void displayScore() {
 }
 
 void setup() {
-  for (int i = 0; i < 3; i++) {    //max number of players for setup
+  for (int i = 0; i < nrMaxPlayers; i++) {    //max number of players for setup
     pinMode(joyButton[i], INPUT_PULLUP);    
   }
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < nrMaxPlayers; i++) {
     pinMode(joyX[i], INPUT);
   }
   pinMode(REPLAY_BUTTON, INPUT_PULLUP);
@@ -425,7 +427,8 @@ void setup() {
 
 void loop() {
   readData();    //read: joyX + buttonState + millis
-  if (analogRead(REPLAY_BUTTON) > 1018) {    //if we digitalRead, the button is too sensitive | lack of analog pins
+  //Serial.println(analogRead(REPLAY_BUTTON));
+  if (analogRead(REPLAY_BUTTON) > analogValue) {    //if we digitalRead, the button is too sensitive | lack of analog pins
       lcd.clear();
       replay();
   }
