@@ -1,4 +1,10 @@
 # Introduction to Robotics
+                                                       ◄♠♣♦♥DEMO♥♦♣♠►
+Mai jos veți găsi două filmulețe scurte care ilustrează dinamica jocului.
+
+**YouTube:** https://www.youtube.com/channel/UC0CxP3J1w-09VYszRM-3TJw/videos (recomandat)
+
+**Drive:** https://drive.google.com/drive/folders/13PsR9wBEoKmsXPBNfd40a_022aPInmm6?usp=sharing
 
                                                       ◄♠♣♦♥DESPRE♥♦♣♠►
 *__Fruit Speed__* este un joc distractiv, competitiv, bazat in special pe aptitudinile jucătorilor, însă și pe noroc. Acesta îți îmbunătățește reflexele și viteza de reacție la un stimul vizual. Este inspirat din jocul de carti *Război Egiptean*.
@@ -52,10 +58,3 @@ Până aici jocul a fost doar de noroc. Dar acum vine partea amuzantă care nece
 
                                                       ◄♠♣♦♥SCOPUL♥♦♣♠►
 Ultimul jucător care rămâne cu un punctaj nenul câștigă.
-
-                                                       ◄♠♣♦♥DEMO♥♦♣♠►
-Mai jos veți găsi două filmulețe scurte care ilustrează dinamica jocului.
-
-**YouTube:** https://www.youtube.com/channel/UC0CxP3J1w-09VYszRM-3TJw/videos (recomandat)
-
-**Drive:** https://drive.google.com/drive/folders/13PsR9wBEoKmsXPBNfd40a_022aPInmm6?usp=sharing
